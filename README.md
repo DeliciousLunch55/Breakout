@@ -1,1 +1,1 @@
-An implementation of the game Breakout, utilizing Java Swing and AWT Graphics2.
+An implementation of the game Breakout, utilizing Java Swing and AWT Graphics2D.
