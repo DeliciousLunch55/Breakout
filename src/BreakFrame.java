@@ -11,6 +11,7 @@ public class BreakFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(this.getSize());
 
         add(breakPanel);
 

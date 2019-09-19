@@ -1,26 +1,35 @@
 
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.geom.RoundRectangle2D;
-import java.awt.geom.Rectangle2D;
 
 public class Paddle {
 
     private int paddleHeight;
     private int paddleWidth;
+    //private int windowWidth=Constants.DEFAULT_WINDOW_WIDTH;
+    //private int windowHeight=Constants.DEFAULT_WINDOW_HEIGHT;
     private int paddleX;
     private int paddleY;
     private Color padFillColor;
     private Color padDrawColor;
 
-    public Paddle(int initX, int initY, int width, int height) {
+    public Paddle() {
+        this.paddleHeight=Constants.DEFAULT_PADDLE_HEIGHT;
+        this.paddleWidth=Constants.DEFAULT_PADDLE_WIDTH;
+        this.paddleX=Constants.DEFAULT_PADDLE_X;
+        this.paddleY=Constants.DEFAULT_PADDLE_Y;
+        this.padFillColor=Color.GREEN;
+        this.padDrawColor=Color.BLUE;
+    }
+
+    public Paddle(int initX, int initY, int width, int height, Color fillColor, Color drawColor) {
         this.paddleHeight=height;
         this.paddleWidth=width;
         this.paddleX=initX;
         this.paddleY=initY;
-        padFillColor=Color.WHITE;
-        padDrawColor=Color.WHITE;
+        this.padFillColor=fillColor;
+        this.padDrawColor=drawColor;
     }
 
     public void drawPaddle(Graphics2D g2) {
@@ -34,14 +43,6 @@ public class Paddle {
         g2.setColor(padDrawColor);
         g2.draw(pad);
         g2.setColor(origColor);
-    }
-
-    public void setPaddleFillColor(Color padFillColor) {
-        this.padFillColor=padFillColor;
-    }
-
-    public void setPaddleDrawColor(Color padDrawColor) {
-        this.padDrawColor=padDrawColor;
     }
 
     public int getPaddleX() {
@@ -66,5 +67,34 @@ public class Paddle {
 
     public void setPaddleY (int newPadY) {
         this.paddleY=newPadY;
+    }
+
+    public void setPaddleFillColor(Color padFillColor) {
+        this.padFillColor=padFillColor;
+    }
+
+    public void setPaddleDrawColor(Color padDrawColor) {
+        this.padDrawColor=padDrawColor;
+    }
+
+    public void setPaddleWidth(int newWidth) {
+        this.paddleWidth=newWidth;
+    }
+
+    public void setPaddleHeight(int newHeight) {
+        this.paddleHeight=newHeight;
+    }
+
+    public void resizePaddle(int newWidth, int newHeight) {
+        double tempPaddleWidth=(double)newWidth*((double)Constants.DEFAULT_PADDLE_WIDTH/Constants.DEFAULT_WINDOW_WIDTH);
+        double tempPaddleHeight=(double)newHeight*((double)Constants.DEFAULT_PADDLE_HEIGHT/
+                Constants.DEFAULT_WINDOW_HEIGHT);
+        double tempPaddleX=(double)this.getPaddleX()*((double)newWidth/Constants.getWindowWidth());
+        double tempPaddleY=(double)this.getPaddleY()*((double)newHeight/Constants.getWindowHeight());
+
+        this.setPaddleWidth((int)tempPaddleWidth);
+        this.setPaddleHeight((int)tempPaddleHeight);
+        this.setPaddleX((int)tempPaddleX);
+        this.setPaddleY((int)tempPaddleY);
     }
 }
