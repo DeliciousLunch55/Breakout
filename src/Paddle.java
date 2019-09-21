@@ -1,14 +1,14 @@
 
 import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.JPanel;
 
 public class Paddle {
 
     private int paddleHeight;
     private int paddleWidth;
-    //private int windowWidth=Constants.DEFAULT_WINDOW_WIDTH;
-    //private int windowHeight=Constants.DEFAULT_WINDOW_HEIGHT;
     private int paddleX;
     private int paddleY;
     private Color padFillColor;
@@ -34,7 +34,7 @@ public class Paddle {
 
     public void drawPaddle(Graphics2D g2) {
 
-        RoundRectangle2D pad=new RoundRectangle2D.Double(paddleX,paddleY,paddleWidth,
+        RoundRectangle2D pad=new RoundRectangle2D.Double(paddleX-paddleWidth/2,paddleY,paddleWidth,
                 paddleHeight,paddleHeight,paddleHeight);
 
         Color origColor=g2.getColor();
@@ -61,8 +61,15 @@ public class Paddle {
         return paddleHeight;
     }
 
+    //Checks for collision with JPanel walls, and sets the paddle based off of result and method parameters.
     public void setPaddleX (int newPadX) {
-        this.paddleX=newPadX;
+        if((newPadX>paddleWidth/2)&&(newPadX+(this.getPaddleWidth()/2)<Constants.getWindowWidth())) {
+            this.paddleX=newPadX;
+        }else if(newPadX+(this.getPaddleWidth()/2)>=Constants.getWindowWidth()) {
+            this.paddleX=Constants.getWindowWidth()-(this.getPaddleWidth()/2);
+        }else if(newPadX<=(this.getPaddleWidth()/2)) {
+            this.paddleX=this.getPaddleWidth()/2;
+        }
     }
 
     public void setPaddleY (int newPadY) {
@@ -90,7 +97,7 @@ public class Paddle {
         double tempPaddleHeight=(double)newHeight*((double)Constants.DEFAULT_PADDLE_HEIGHT/
                 Constants.DEFAULT_WINDOW_HEIGHT);
         double tempPaddleX=(double)this.getPaddleX()*((double)newWidth/Constants.getWindowWidth());
-        double tempPaddleY=(double)this.getPaddleY()*((double)newHeight/Constants.getWindowHeight());
+        double tempPaddleY=(double)newHeight*((double)Constants.DEFAULT_PADDLE_Y/Constants.DEFAULT_WINDOW_HEIGHT);
 
         this.setPaddleWidth((int)tempPaddleWidth);
         this.setPaddleHeight((int)tempPaddleHeight);

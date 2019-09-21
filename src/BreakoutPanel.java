@@ -3,9 +3,12 @@ import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 public class BreakoutPanel extends JPanel {
 
@@ -14,9 +17,19 @@ public class BreakoutPanel extends JPanel {
 
     Paddle gamePad=new Paddle();
     Ball gameBall=new Ball();
+    Timer gameLoop=new Timer(Constants.DEFAULT_REFRESH_RATE,new ActionListener(){
+        public void actionPerformed(ActionEvent e) {
+            gameTick(gameBall,BreakoutPanel.this);
+        }
+    });
 
     InputMap im=this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
     ActionMap am=this.getActionMap();
+
+    public BreakoutPanel() {
+        gameLoop.setInitialDelay(0);
+        gameLoop.start();
+    }
 
     public void addKeyBinding(JComponent comp, int keyCode, String id, ActionListener actionListener) {
         InputMap im=comp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -30,11 +43,17 @@ public class BreakoutPanel extends JPanel {
         });
     }
 
+    public void gameTick(Ball gameBall,JPanel panel) {
+        gameBall.moveBall(gamePad);
+        panel.repaint();
+        Toolkit.getDefaultToolkit().sync();
+    }
+
     //This packages all component resizing into one method. Eventually it will work off of a resizing action listener,
-    //instead of the repaint method in the paint component.
+    //instead of the repaint method in the paintComponent.
     public void resizeComponents(int newWidth,int newHeight) {
-        gamePad.resizePaddle(newWidth,newHeight);  //works great when aspect ratio is maintained, but if increase height
-        gameBall.resizeBall(newWidth,newHeight);  //by itself, the ratio is fatally thrown off. Maybe maintain aspect somehow?
+        gamePad.resizePaddle(newWidth,newHeight);
+        gameBall.resizeBall(newWidth,newHeight);
         Constants.setWindowHeight(newHeight);
         Constants.setWindowWidth(newWidth);
     }
@@ -45,26 +64,17 @@ public class BreakoutPanel extends JPanel {
 
         Graphics2D g2=(Graphics2D)g;
 
-        addKeyBinding(this,KeyEvent.VK_D,"padRight", (evt)-> {
-            gamePad.setPaddleX(gamePad.getPaddleX()+10);
-            repaint();
-        });
-        addKeyBinding(this,KeyEvent.VK_A,"padLeft",(evt)-> {
-            gamePad.setPaddleX(gamePad.getPaddleX()-10);
-            repaint();
-        });
-        addKeyBinding(this,KeyEvent.VK_W,"padUp",(evt)-> {
-            gamePad.setPaddleY(gamePad.getPaddleY()-10);
-            repaint();
-        });
-        addKeyBinding(this,KeyEvent.VK_S,"padDown",(evt)-> {
-            gamePad.setPaddleY(gamePad.getPaddleY()+10);
-            repaint();
+        this.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                gamePad.setPaddleX(e.getX());
+                repaint();
+            }
         });
 
         this.setBackground(Color.BLACK);
-
         this.resizeComponents(this.getWidth(),this.getHeight());
+
         gamePad.setPaddleFillColor(Color.GREEN);
         gamePad.setPaddleDrawColor(Color.BLUE);
         gamePad.drawPaddle(g2);
@@ -72,3 +82,5 @@ public class BreakoutPanel extends JPanel {
 
     }
 }
+
+

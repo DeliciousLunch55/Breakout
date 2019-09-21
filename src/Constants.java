@@ -21,6 +21,7 @@ public class Constants {
 
         public final static int DEFAULT_WINDOW_WIDTH=600;
         public final static int DEFAULT_WINDOW_HEIGHT=400;
+        public final static int DEFAULT_REFRESH_RATE=34; //34 millisecond refresh delay, 30 fps
 
         private static int WINDOW_WIDTH=DEFAULT_WINDOW_WIDTH; //these are one iteration of window size behind during
         private static int WINDOW_HEIGHT=DEFAULT_WINDOW_HEIGHT; //resizing, so that components have a basis for their
@@ -33,4 +34,6 @@ public class Constants {
         public final static int DEFAULT_BALL_SIZE=5;
         public final static int DEFAULT_BALL_X=DEFAULT_WINDOW_WIDTH/2;
         public final static int DEFAULT_BALL_Y=DEFAULT_WINDOW_HEIGHT-100;
+        public final static int DEFAULT_BALL_X_VELOCITY=4;
+        public final static int DEFAULT_BALL_Y_VELOCITY=4;
 }
