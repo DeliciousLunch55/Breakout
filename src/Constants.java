@@ -36,4 +36,7 @@ public class Constants {
         public final static int DEFAULT_BALL_Y=DEFAULT_WINDOW_HEIGHT-100;
         public final static int DEFAULT_BALL_X_VELOCITY=4;
         public final static int DEFAULT_BALL_Y_VELOCITY=4;
+
+        public final static int DEFAULT_BRICK_WIDTH=150;
+        public final static int DEFAULT_BRICK_HEIGHT=30;
 }

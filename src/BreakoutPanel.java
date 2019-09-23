@@ -17,6 +17,7 @@ public class BreakoutPanel extends JPanel {
 
     Paddle gamePad=new Paddle();
     Ball gameBall=new Ball();
+    SimpleBrick testBrick=new SimpleBrick(20,20);
     Timer gameLoop=new Timer(Constants.DEFAULT_REFRESH_RATE,new ActionListener(){
         public void actionPerformed(ActionEvent e) {
             gameTick(gameBall,BreakoutPanel.this);
@@ -68,7 +69,6 @@ public class BreakoutPanel extends JPanel {
             @Override
             public void mouseMoved(MouseEvent e) {
                 gamePad.setPaddleX(e.getX());
-                repaint();
             }
         });
 
@@ -79,6 +79,7 @@ public class BreakoutPanel extends JPanel {
         gamePad.setPaddleDrawColor(Color.BLUE);
         gamePad.drawPaddle(g2);
         gameBall.drawBall(g2);
+        testBrick.drawBrick(g2);
 
     }
 }

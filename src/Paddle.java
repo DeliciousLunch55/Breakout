@@ -3,6 +3,7 @@ import java.awt.Graphics2D;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.geom.Rectangle2D;
 import javax.swing.JPanel;
 
 public class Paddle {
@@ -13,6 +14,7 @@ public class Paddle {
     private int paddleY;
     private Color padFillColor;
     private Color padDrawColor;
+    private Rectangle2D paddleBounds;
 
     public Paddle() {
         this.paddleHeight=Constants.DEFAULT_PADDLE_HEIGHT;
@@ -37,6 +39,8 @@ public class Paddle {
         RoundRectangle2D pad=new RoundRectangle2D.Double(paddleX-paddleWidth/2,paddleY,paddleWidth,
                 paddleHeight,paddleHeight,paddleHeight);
 
+        paddleBounds=pad.getBounds();
+
         Color origColor=g2.getColor();
         g2.setColor(padFillColor);
         g2.fill(pad);
@@ -59,6 +63,10 @@ public class Paddle {
 
     public int getPaddleHeight() {
         return paddleHeight;
+    }
+
+    public Rectangle2D getPaddleBounds() {
+        return paddleBounds;
     }
 
     //Checks for collision with JPanel walls, and sets the paddle based off of result and method parameters.

@@ -2,6 +2,7 @@
 import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 public class Ball {
 
@@ -14,6 +15,7 @@ public class Ball {
     private int ballXDirection=1;
     private int ballYDirection=-1;
     private int ballSize;
+    private Rectangle2D ballBounds;
 
     public Ball() {
         this.ballSize=Constants.DEFAULT_BALL_SIZE;
@@ -37,6 +39,7 @@ public class Ball {
 
     public void drawBall(Graphics2D g2) {
         Ellipse2D.Double ball=new Ellipse2D.Double(ballX,ballY,ballSize,ballSize);
+        ballBounds=ball.getBounds();
 
         Color origColor=g2.getColor();
         g2.setColor(fillColor);
@@ -64,6 +67,10 @@ public class Ball {
 
     public void setBallSize(int newSize) {
         this.ballSize=newSize;
+    }
+
+    public void setBallBounds(Rectangle2D bounds) {
+        ballBounds=bounds;
     }
 
     public void setBallFillColor(Color newFill) {
@@ -94,6 +101,10 @@ public class Ball {
         return ballYVel;
     }
 
+    public Rectangle2D getBallBounds() {
+        return ballBounds;
+    }
+
     public void moveBall(Paddle paddle) {
         //First, check for wall collisions
         if(this.getBallX()+this.getBallSize()>=Constants.getWindowWidth()||this.getBallX()<=0) {
@@ -105,12 +116,9 @@ public class Ball {
             ballYDirection=ballYDirection*-1;
         }
 
-        //TO ADD, CHECK FOR PADDLE COLLISION__REPLACE THIS WITH RECTANGLE2D INTERSECT CHECKING
-        if(this.getBallX()>=(paddle.getPaddleX()-paddle.getPaddleWidth()/2)&&
-                (this.getBallX()+this.getBallSize())<=(paddle.getPaddleX()+paddle.getPaddleWidth()-(paddle.getPaddleWidth()/2))) {
-            if((this.getBallY()+this.getBallSize())>=paddle.getPaddleY()&&
-                    (this.getBallY()+this.getBallSize())<=(paddle.getPaddleY()+paddle.getPaddleHeight()) &&
-                        ballYDirection==1) {
+        //Check for collision with paddle while ball is moving down
+        if(ballYDirection==1) {
+            if(ballBounds.intersects(paddle.getPaddleBounds())) {
                 ballYDirection=-1;
             }
         }
