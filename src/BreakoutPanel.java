@@ -17,10 +17,11 @@ public class BreakoutPanel extends JPanel {
 
     Paddle gamePad=new Paddle();
     Ball gameBall=new Ball();
-    SimpleBrick testBrick=new SimpleBrick(20,20);
+    BrickStructure gameStructure=new BrickStructure();
+
     Timer gameLoop=new Timer(Constants.DEFAULT_REFRESH_RATE,new ActionListener(){
         public void actionPerformed(ActionEvent e) {
-            gameTick(gameBall,BreakoutPanel.this);
+            gameTick(gameBall,BreakoutPanel.this,gameStructure);
         }
     });
 
@@ -44,8 +45,10 @@ public class BreakoutPanel extends JPanel {
         });
     }
 
-    public void gameTick(Ball gameBall,JPanel panel) {
+    public void gameTick(Ball gameBall,JPanel panel,BrickStructure gameStructure) {
         gameBall.moveBall(gamePad);
+        gameStructure.checkBrickStrCollision(gameBall);
+
         panel.repaint();
         Toolkit.getDefaultToolkit().sync();
     }
@@ -55,6 +58,8 @@ public class BreakoutPanel extends JPanel {
     public void resizeComponents(int newWidth,int newHeight) {
         gamePad.resizePaddle(newWidth,newHeight);
         gameBall.resizeBall(newWidth,newHeight);
+        gameStructure.resizeBrickStructure(newWidth,newHeight);
+
         Constants.setWindowHeight(newHeight);
         Constants.setWindowWidth(newWidth);
     }
@@ -79,7 +84,8 @@ public class BreakoutPanel extends JPanel {
         gamePad.setPaddleDrawColor(Color.BLUE);
         gamePad.drawPaddle(g2);
         gameBall.drawBall(g2);
-        testBrick.drawBrick(g2);
+
+        gameStructure.drawBrickStr(g2);
 
     }
 }

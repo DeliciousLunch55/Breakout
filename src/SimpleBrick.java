@@ -14,6 +14,7 @@ public class SimpleBrick extends Brick {
         setBrickLife((byte)1);
     }
 
+    @Override
     public void drawBrick(Graphics2D g2) {
         if(getBrickLife()>0) {
             Rectangle2D brick=new Rectangle2D.Float((float)getBrickX(),(float)getBrickY(),(float)getBrickWidth(),
@@ -29,11 +30,35 @@ public class SimpleBrick extends Brick {
         }
     }
 
-    //Need to find a way to check these in loop. During first frame the bounds don't exist, so game errors out
-    // fatally on null pointer.
+    @Override
     public void checkCollision(Ball gameBall) {
-        if(getBrickBounds().intersects(gameBall.getBallBounds())) {
+        if((getBrickBounds()!=null)&&(getBrickBounds().intersects(gameBall.getBallBounds()))) {
             setBrickLife((byte)0);
+
+            Rectangle2D brickInt=gameBall.getBallBounds().createIntersection(getBrickBounds());
+
+            //System.out.println(brickInt.toString());
+
+            //This seems to be working roughly half of the time. For some reason, some collisions take place so far into
+            //the block that this ceases to work, and the ball continues in the same direction as before collision.
+            if((gameBall.getBallBounds().getY()+(gameBall.getBallBounds().getHeight()/2))<
+                    (brickInt.getY()+(brickInt.getHeight()/2))) {
+                gameBall.setBallYDir(Constants.UP);
+            }
+            if((gameBall.getBallBounds().getY()+(gameBall.getBallBounds().getHeight()/2))>
+                    (brickInt.getY()+(brickInt.getHeight()/2))) {
+                gameBall.setBallYDir(Constants.DOWN);
+            }
+            if(gameBall.getBallBounds().getX()+(gameBall.getBallBounds().getWidth()/2)<
+                    (brickInt.getX()+(brickInt.getWidth()/2))) {
+                gameBall.setBallXDir(Constants.LEFT);
+            }
+            if(gameBall.getBallBounds().getX()+(gameBall.getBallBounds().getWidth()/2)>
+                    (brickInt.getX()+(brickInt.getWidth()/2))) {
+                gameBall.setBallXDir(Constants.RIGHT);
+            }
+
+            setBrickBounds(null);
         }
     }
 }

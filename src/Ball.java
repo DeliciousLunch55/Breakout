@@ -12,8 +12,8 @@ public class Ball {
     private int ballY;
     private int ballXVel;
     private int ballYVel;
-    private int ballXDirection=1;
-    private int ballYDirection=-1;
+    private int ballXDirection=Constants.RIGHT;
+    private int ballYDirection=Constants.LEFT;
     private int ballSize;
     private Rectangle2D ballBounds;
 
@@ -57,6 +57,14 @@ public class Ball {
         this.ballY=newY;
     }
 
+    public void setBallXDir(int newDir) {
+        ballXDirection=newDir; //This should always be either -1/1, but not currently not checking input
+    }
+
+    public void setBallYDir(int newDir) {
+        ballYDirection=newDir;
+    }
+
     public void setBallXVel(int newVel) {
         this.ballXVel=newVel;
     }
@@ -93,6 +101,14 @@ public class Ball {
         return ballY;
     }
 
+    public int getBallXDir() {
+        return ballXDirection;
+    }
+
+    public int getBallYDir() {
+        return ballYDirection;
+    }
+
     public int getBallXVel() {
         return ballXVel;
     }
@@ -120,6 +136,11 @@ public class Ball {
         if(ballYDirection==1) {
             if(ballBounds.intersects(paddle.getPaddleBounds())) {
                 ballYDirection=-1;
+                if(ballX+getBallSize()<paddle.getPaddleX()) {   //check what side of paddle ball hits
+                    ballXDirection=-1;  //push ball in x direction based off of what side of paddle ball hit
+                }else if(ballX>paddle.getPaddleX()) {
+                    ballXDirection=1;
+                }
             }
         }
 

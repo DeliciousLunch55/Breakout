@@ -19,8 +19,8 @@ public class Brick {
     public Brick() {
         brickWidth=Constants.DEFAULT_BRICK_WIDTH;
         brickHeight=Constants.DEFAULT_BRICK_HEIGHT;
-        brickFillColor=Color.RED;
-        brickDrawColor=Color.BLUE;
+        brickFillColor=Color.BLUE;
+        brickDrawColor=Color.BLACK;
     }
 
     public int getBrickX() {
@@ -43,6 +43,26 @@ public class Brick {
         return brickLifeCounter;
     }
 
+    public void drawBrick(Graphics2D g2) {
+        if(getBrickLife()>0) {
+            Rectangle2D brick = new Rectangle2D.Float((float) getBrickX(), (float) getBrickY(), (float) getBrickWidth(),
+                    (float) getBrickHeight());
+            setBrickBounds(brick.getBounds());
+
+            Color origColor = g2.getColor();
+            g2.setColor(getBrickFillColor());
+            g2.fill(brick);
+            g2.setColor(getBrickDrawColor());
+            g2.draw(brick);
+            g2.setColor(origColor);
+        }
+    }
+
+    //ADD DEFAULT CHECK COLLISION FUNCTIONALITY
+    public void checkCollision(Ball gameBall) {
+
+    }
+
     public Color getBrickFillColor() {
         return brickFillColor;
     }
@@ -53,6 +73,19 @@ public class Brick {
 
     public Rectangle2D getBrickBounds() {
         return brickBounds;
+    }
+
+    public void resizeBrick(int newWinWidth,int newWinHeight) {
+        double tempNewHeight=(double)newWinHeight*((double)Constants.DEFAULT_BRICK_HEIGHT/
+                Constants.DEFAULT_WINDOW_HEIGHT);
+        double tempNewWidth=(double)newWinWidth*((double)Constants.DEFAULT_BRICK_WIDTH/Constants.DEFAULT_WINDOW_WIDTH);
+        double tempBrickX=(double)newWinWidth*((double)getBrickX()/Constants.getWindowWidth());
+        double tempBrickY=(double)newWinHeight*((double)getBrickY()/Constants.getWindowHeight());
+
+        setBrickWidth((int)tempNewWidth);
+        setBrickHeight((int)tempNewHeight);
+        setBrickX((int)tempBrickX);
+        setBrickY((int)tempBrickY);
     }
 
     public void setBrickX(int newX) {

@@ -19,7 +19,7 @@ public class Constants {
             return WINDOW_HEIGHT;
         }
 
-        public final static int DEFAULT_WINDOW_WIDTH=600;
+        public final static int DEFAULT_WINDOW_WIDTH=641;
         public final static int DEFAULT_WINDOW_HEIGHT=400;
         public final static int DEFAULT_REFRESH_RATE=34; //34 millisecond refresh delay, 30 fps
 
@@ -37,6 +37,17 @@ public class Constants {
         public final static int DEFAULT_BALL_X_VELOCITY=4;
         public final static int DEFAULT_BALL_Y_VELOCITY=4;
 
-        public final static int DEFAULT_BRICK_WIDTH=150;
-        public final static int DEFAULT_BRICK_HEIGHT=30;
+        public final static int UP=-1;
+        public final static int DOWN=1;
+        public final static int RIGHT=1;
+        public final static int LEFT=-1;
+
+        public final static int DEFAULT_BRICK_STR_COLUMNS=17;
+        public final static int DEFAULT_BRICK_STR_ROWS=6;
+
+        public final static int DEFAULT_BRICK_WIDTH=33;
+        public final static int DEFAULT_BRICK_HEIGHT=15;
+        public final static int DEFAULT_BRICK_START_X=40;
+        public final static int DEFAULT_BRICK_START_Y=30;
+
 }
