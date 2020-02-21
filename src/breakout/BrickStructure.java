@@ -19,6 +19,15 @@ public class BrickStructure {
         }
     }
 
+    public void resetBrickStructure() {
+        for(int i=0;i<brickStr.length;i++) {
+            for(int j=0;j<brickStr[i].length;j++) {
+                brickStr[i][j]=new SimpleBrick(brickStrX+(j*Constants.DEFAULT_BRICK_WIDTH),
+                        brickStrY+(i*Constants.DEFAULT_BRICK_HEIGHT));
+            }
+        }
+    }
+
     public void resizeBrickStructure(int newWidth,int newHeight) {
         double tempBrickWidth=(double)newWidth*((double)Constants.DEFAULT_BRICK_WIDTH/Constants.DEFAULT_WINDOW_WIDTH);
         double tempBrickHeight=(double)newHeight*((double)Constants.DEFAULT_BRICK_HEIGHT/Constants.DEFAULT_WINDOW_HEIGHT);

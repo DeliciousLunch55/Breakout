@@ -62,8 +62,8 @@ public class Constants {
         public final static Font GENERAL_TEXT_FONT=new Font("text font",Font.TRUETYPE_FONT,12);
         public final static Font PAUSE_FONT=new Font("pause font",Font.CENTER_BASELINE,30);
 
-        public final static int GAMESTATE_PLAYING=1;
         public final static int GAMESTATE_LOST=0;
+        public final static int GAMESTATE_PLAYING=1;
         public final static int GAMESTATE_WON=2;
 
 }

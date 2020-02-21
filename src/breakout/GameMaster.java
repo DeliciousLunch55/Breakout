@@ -32,9 +32,48 @@ public class GameMaster implements Runnable {
 
     public void tickGameSimulation() {
         if(!isPaused) {
-            gameBall.moveBall(gamePaddle);
-            gameBoard.checkBrickStrCollision(gameBall);
+            if(gameBall.getBallY()<Constants.getWindowHeight())
+            {
+                gameBall.moveBall(gamePaddle);
+                gameBoard.checkBrickStrCollision(gameBall);
+            }else{
+                if(getPlayerLives()>0) {
+                    setPlayerLives(getPlayerLives()-1);
+                    resetBallState();
+                }else {   //This should be called only when the player loses on his last life.  Need to add lose mechanic.
+                    setPlayerLives(0);
+                    gameState=Constants.GAMESTATE_LOST;
+                    isPaused=true;
+                }
+            }
         }
+    }
+
+    public void resetBallState() {
+        isPaused=true;
+        gameState=Constants.GAMESTATE_PLAYING;
+
+        float tempBallY=(float)Constants.getWindowHeight()*
+                ((float)Constants.DEFAULT_BALL_Y/Constants.DEFAULT_WINDOW_HEIGHT);
+        this.gameBall.setBallX(Constants.getWindowWidth()/2);
+        this.gameBall.setBallY((int)tempBallY);
+        this.gameBall.setBallXDir(Constants.RIGHT);
+        this.gameBall.setBallYDir(Constants.UP);
+    }
+
+    public void resetBallAndGame() {
+        isPaused=true;
+        gameState=Constants.GAMESTATE_PLAYING;
+
+        gameBoard.resetBrickStructure();
+        setPlayerLives(Constants.DEFAULT_PLAYER_LIVES);
+
+        float tempBallY=(float)Constants.getWindowHeight()*
+                ((float)Constants.DEFAULT_BALL_Y/Constants.DEFAULT_WINDOW_HEIGHT);
+        this.gameBall.setBallX(Constants.getWindowWidth()/2);
+        this.gameBall.setBallY((int)tempBallY);
+        this.gameBall.setBallXDir(Constants.RIGHT);
+        this.gameBall.setBallYDir(Constants.UP);
     }
 
     public void setPlayerScore(int newScore) {
@@ -55,5 +94,9 @@ public class GameMaster implements Runnable {
 
     public int getPlayerLives() {
         return playerLives;
+    }
+
+    public int getGameState() {
+        return gameState;
     }
 }

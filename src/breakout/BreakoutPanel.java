@@ -123,8 +123,14 @@ public class BreakoutPanel extends JPanel implements Runnable{
         }
 
         if(gm.getPauseState()==true) {
-            drawCenteredString("GAME PAUSED",g2,Constants.getWindowWidth(),Constants.getWindowHeight(),
-                    Constants.PAUSE_FONT);
+            if(gm.getGameState()!=Constants.GAMESTATE_LOST) {
+                drawCenteredString("GAME PAUSED",g2,Constants.getWindowWidth(),Constants.getWindowHeight(),
+                        Constants.PAUSE_FONT);
+            }else if(gm.getGameState()==Constants.GAMESTATE_LOST) {
+                drawCenteredString("YOU LOSE",g2,Constants.getWindowWidth(),Constants.getWindowHeight(),
+                        Constants.PAUSE_FONT);
+            }
+
         }
 
         g2.setColor(origColor);
@@ -142,7 +148,17 @@ public class BreakoutPanel extends JPanel implements Runnable{
                 gamePad.setPaddleX(e.getX());
             }
         });
-        addKeyBinding(this,KeyEvent.VK_SPACE,"space",(e) -> gm.flipPauseState());
+        addKeyBinding(this,KeyEvent.VK_SPACE,"space",new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                if(gm.getGameState()!=Constants.GAMESTATE_LOST) {
+                    gm.flipPauseState();
+                }else if(gm.getGameState()==Constants.GAMESTATE_LOST) {
+                    gm.resetBallAndGame();
+                }
+            }
+        });
+
+
 
         this.setBackground(Color.BLACK);
         this.resizeComponents(this.getWidth(),this.getHeight());
