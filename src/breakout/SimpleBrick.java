@@ -1,4 +1,4 @@
-
+package breakout;
 /*A basic brick that has one 'life' (will destroy after being hit one time).*/
 
 import java.awt.Graphics2D;
@@ -42,11 +42,11 @@ public class SimpleBrick extends Brick {
             //This seems to be working roughly half of the time. For some reason, some collisions take place so far into
             //the block that this ceases to work, and the ball continues in the same direction as before collision.
             if((gameBall.getBallBounds().getY()+(gameBall.getBallBounds().getHeight()/2))<
-                    (brickInt.getY()+(brickInt.getHeight()/2))) {
+                    (brickInt.getY()+(brickInt.getHeight()/2)) && gameBall.getBallYDir()==Constants.DOWN) {
                 gameBall.setBallYDir(Constants.UP);
             }
             if((gameBall.getBallBounds().getY()+(gameBall.getBallBounds().getHeight()/2))>
-                    (brickInt.getY()+(brickInt.getHeight()/2))) {
+                    (brickInt.getY()+(brickInt.getHeight()/2)) && gameBall.getBallYDir()==Constants.UP) {
                 gameBall.setBallYDir(Constants.DOWN);
             }
             if(gameBall.getBallBounds().getX()+(gameBall.getBallBounds().getWidth()/2)<

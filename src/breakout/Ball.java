@@ -1,3 +1,4 @@
+package breakout;
 
 import java.awt.Graphics2D;
 import java.awt.Color;
@@ -58,7 +59,7 @@ public class Ball {
     }
 
     public void setBallXDir(int newDir) {
-        ballXDirection=newDir; //This should always be either -1/1, but not currently not checking input
+        ballXDirection=newDir; //This should always be either -1/1, but not currently checking input
     }
 
     public void setBallYDir(int newDir) {
@@ -127,9 +128,9 @@ public class Ball {
             ballXDirection=ballXDirection*-1;
         }
 
-        //THIS WILL NEED TO CHANGE ONCE WIN/LOSE CONDITION IS IMPLEMENTED (BALL SHOULD FALL OFF OF BOTTOM OF SCREEN)
-        if(this.getBallY()+this.getBallSize()>=Constants.getWindowHeight()||this.getBallY()<=0) {
-            ballYDirection=ballYDirection*-1;
+        //Checks for collision with panel ceiling (no check for collision with floor)
+        if(this.getBallY()<=0) {
+            ballYDirection=Constants.DOWN;
         }
 
         //Check for collision with paddle while ball is moving down

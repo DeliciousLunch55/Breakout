@@ -1,10 +1,9 @@
+package breakout;
 
 import java.awt.Graphics2D;
-import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.geom.Rectangle2D;
-import javax.swing.JPanel;
 
 public class Paddle {
 

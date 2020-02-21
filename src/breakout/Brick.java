@@ -1,10 +1,9 @@
-
+package breakout;
 /*This is a parent class for all brick objects.  It is not meant to be called directly. */
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.Color;
-import javax.swing.JPanel;
 
 public class Brick {
     private int brickXPos;

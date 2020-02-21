@@ -1,3 +1,4 @@
+package breakout;
 
 /*A manager class for all brick objects in play.*/
 
@@ -10,6 +11,15 @@ public class BrickStructure {
     int brickStrY=Constants.DEFAULT_BRICK_START_Y;
 
     public BrickStructure() {
+        for(int i=0;i<brickStr.length;i++) {
+            for(int j=0;j<brickStr[i].length;j++) {
+                brickStr[i][j]=new SimpleBrick(brickStrX+(j*Constants.DEFAULT_BRICK_WIDTH),
+                        brickStrY+(i*Constants.DEFAULT_BRICK_HEIGHT));
+            }
+        }
+    }
+
+    public void resetBrickStructure() {
         for(int i=0;i<brickStr.length;i++) {
             for(int j=0;j<brickStr[i].length;j++) {
                 brickStr[i][j]=new SimpleBrick(brickStrX+(j*Constants.DEFAULT_BRICK_WIDTH),
